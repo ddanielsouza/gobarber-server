@@ -2,6 +2,8 @@ import express from 'express';
 import net from 'net';
 import routes from './routes';
 
+import './databases';
+
 const app = express();
 
 app.use(express.json());
@@ -9,7 +11,6 @@ app.use(routes);
 
 app.all('/', (request, response) => {
    const currentDate = new Date();
-
    return response.json({ message: `App is running ${currentDate.toJSON()}` });
 });
 
