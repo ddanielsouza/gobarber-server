@@ -2,3 +2,5 @@ node_modules
 dist
 *.log
 *.logs
+tmp/*
+!tmp/.gitkeep
