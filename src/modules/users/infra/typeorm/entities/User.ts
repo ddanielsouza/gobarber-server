@@ -18,7 +18,7 @@ class User {
    public email: string;
 
    @Column()
-   public password: string;
+   public password?: string;
 
    @CreateDateColumn()
    public created_at: Date;
