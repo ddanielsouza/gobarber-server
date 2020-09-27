@@ -1,38 +1,29 @@
-import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
-import IUserRepository from '@modules/users/repositories/IUserRepository';
+import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
 import { getRepository, Repository } from 'typeorm';
-import User from '../entities/User';
+import UserToken from '../entities/UserToken';
 
-class UsersRepository implements IUserRepository {
-   private ormRepository: Repository<User>;
+class UserTokensRepository implements IUserTokenRepository {
+   private ormRepository: Repository<UserToken>;
 
    constructor() {
-      this.ormRepository = getRepository(User);
+      this.ormRepository = getRepository(UserToken);
    }
 
-   public async findById(id: string): Promise<User | undefined> {
-      const user = await this.ormRepository.findOne(id);
+   public async generate(user_id: string): Promise<UserToken> {
+      const userToken = this.ormRepository.create({
+         user_id,
+      });
 
-      return user;
+      await this.ormRepository.save(userToken);
+
+      return userToken;
    }
 
-   public async findByEmail(email: string): Promise<User | undefined> {
-      const user = await this.ormRepository.findOne({ where: { email } });
+   public async findByToken(token: string): Promise<UserToken | undefined> {
+      const userToken = await this.ormRepository.findOne({ where: { token } });
 
-      return user;
-   }
-
-   public async save(user: User): Promise<User> {
-      return this.ormRepository.save(user);
-   }
-
-   public async create(user: ICreateUserDTO): Promise<User> {
-      const appointment = this.ormRepository.create(user);
-
-      await this.ormRepository.save(appointment);
-
-      return appointment;
+      return userToken;
    }
 }
 
-export default UsersRepository;
+export default UserTokensRepository;
