@@ -1,6 +1,7 @@
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 import IUserRepository from '../repositories/IUserRepository';
 import IUserTokenRepository from '../repositories/IUserTokenRepository';
 
@@ -28,8 +29,21 @@ export default class SendForgotPasswordEmailService {
          throw new AppError('User does not exists');
       }
 
-      await this.userTokenRepository.generate(user.id);
+      const { token } = await this.userTokenRepository.generate(user.id);
 
-      this.mailProvider.sendMail(email, 'Recuperar senha');
+      await this.mailProvider.sendMail({
+         to: {
+            name: user.name,
+            email: user.email,
+         },
+         subject: '[GoiBarber] Recuperação de senha',
+         templateData: {
+            file: path.resolve(__dirname, '..', 'views', 'forgot_password.hbs'),
+            variables: {
+               name: user.name,
+               link: `http://localhost:3000/reset_password?token${token}`,
+            },
+         },
+      });
    }
 }
