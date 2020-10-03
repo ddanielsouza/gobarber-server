@@ -1,6 +1,7 @@
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
-import { getRepository, Repository } from 'typeorm';
+import { FindManyOptions, getRepository, Not, Repository } from 'typeorm';
 import User from '../entities/User';
 
 class UsersRepository implements IUserRepository {
@@ -32,6 +33,16 @@ class UsersRepository implements IUserRepository {
       await this.ormRepository.save(appointment);
 
       return appointment;
+   }
+
+   public async findAllProviders({
+      except_user_id,
+   }: IFindAllProvidersDTO): Promise<User[]> {
+      const conditionsFind: FindManyOptions<User> | undefined = except_user_id
+         ? { where: { id: Not(except_user_id) } }
+         : undefined;
+
+      return this.ormRepository.find(conditionsFind);
    }
 }
 

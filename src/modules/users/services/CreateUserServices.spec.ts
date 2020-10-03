@@ -13,10 +13,7 @@ describe('CreateUsers', () => {
       fakeUsersRepository = new FakeUsersRepository();
       fakeHasProvider = new FakeHasProvider();
 
-      createUsers = new CreateUserServices(
-         fakeUsersRepository,
-         fakeHasProvider,
-      );
+      createUsers = new CreateUserServices(fakeUsersRepository, fakeHasProvider);
    });
    it('should be able to create a new user', async () => {
       const user = await createUsers.execute({

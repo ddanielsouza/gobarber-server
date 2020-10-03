@@ -20,6 +20,8 @@
       "prettier"
    ],
    "rules": {
+      "no-plusplus": "off",
+      "no-await-in-loop": "off",
       "no-useless-constructor": "off",
       "camelcase": "off",
       "no-console": "off",

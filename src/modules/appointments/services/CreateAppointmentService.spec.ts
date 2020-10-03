@@ -9,9 +9,7 @@ describe('CreateAppointments', () => {
    beforeEach(() => {
       fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
-      createAppointments = new CreateAppointmentService(
-         fakeAppointmentsRepository,
-      );
+      createAppointments = new CreateAppointmentService(fakeAppointmentsRepository);
    });
 
    it('should be able to create a new appointment', async () => {
