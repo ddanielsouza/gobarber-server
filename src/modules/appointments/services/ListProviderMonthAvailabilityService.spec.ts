@@ -17,18 +17,22 @@ describe('ListProviderMonthAvailabilityService', () => {
       await fakeAppointmentsRepository.create({
          provider_id: 'user-id',
          date: new Date(`2020-04-20 08:00:00`),
+         user_id: 'user-id',
       });
 
       for (let index = 8; index < 18; index++) {
          await fakeAppointmentsRepository.create({
             provider_id: 'user-id',
             date: new Date(`2020-05-20 ${index}:00:00`),
+            user_id: 'user-id',
          });
       }
 
       await fakeAppointmentsRepository.create({
          provider_id: 'user-id',
          date: new Date(`2020-05-21 08:00:00`),
+
+         user_id: 'user-id',
       });
 
       const availability = await listProviderMonthAvailability.execute({

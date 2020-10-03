@@ -1,11 +1,11 @@
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO';
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
-import IAppointmentsReporitory from '@modules/appointments/repositories/IAppointmentsReporitory';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import { getRepository, Raw, Repository } from 'typeorm';
 import Appointment from '../entities/Appointment';
 
-class AppointmentsRepository implements IAppointmentsReporitory {
+class AppointmentsRepository implements IAppointmentsRepository {
    private ormRepository: Repository<Appointment>;
 
    constructor() {
@@ -15,10 +15,12 @@ class AppointmentsRepository implements IAppointmentsReporitory {
    public async create({
       provider_id,
       date,
+      user_id,
    }: ICreateAppointmentDTO): Promise<Appointment> {
       const appointment = this.ormRepository.create({
          provider_id,
          date,
+         user_id,
       });
 
       await this.ormRepository.save(appointment);
