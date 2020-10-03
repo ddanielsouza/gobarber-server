@@ -1,11 +1,12 @@
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO';
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import IAppointimentsReporitory from '@modules/appointments/repositories/IAppointimentsReporitory';
-import { getMonth, getYear } from 'date-fns';
+import IAppointmentsReporitory from '@modules/appointments/repositories/IAppointmentsReporitory';
+import { getDate, getMonth, getYear } from 'date-fns';
 import { uuid } from 'uuidv4';
 
-class FakeAppointmentsRepository implements IAppointimentsReporitory {
+class FakeAppointmentsRepository implements IAppointmentsReporitory {
    private appointments: Appointment[] = [];
 
    public async create({
@@ -42,6 +43,24 @@ class FakeAppointmentsRepository implements IAppointimentsReporitory {
             appointment.provider_id === provider_id &&
             getMonth(appointment.date) + 1 === month &&
             getYear(appointment.date) === year
+         );
+      });
+
+      return appointments;
+   }
+
+   public async findAllInDayFromProvider({
+      provider_id,
+      month,
+      year,
+      day,
+   }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
+      const appointments = this.appointments.filter(appointment => {
+         return (
+            appointment.provider_id === provider_id &&
+            getMonth(appointment.date) + 1 === month &&
+            getYear(appointment.date) === year &&
+            getDate(appointment.date) === day
          );
       });
 

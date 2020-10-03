@@ -3,7 +3,7 @@ import AppError from '@shared/errors/AppError';
 
 import { inject, injectable } from 'tsyringe';
 import Appointment from '../infra/typeorm/entities/Appointment';
-import IAppointimentsReporitory from '../repositories/IAppointimentsReporitory';
+import IAppointmentsReporitory from '../repositories/IAppointmentsReporitory';
 
 interface IRequestDTO {
    date: Date;
@@ -14,7 +14,7 @@ interface IRequestDTO {
 class CreateAppointmentService {
    constructor(
       @inject('AppointmentsRepository')
-      private appointmentsRepository: IAppointimentsReporitory,
+      private appointmentsRepository: IAppointmentsReporitory,
    ) {}
 
    public async execute({
