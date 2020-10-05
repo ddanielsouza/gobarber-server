@@ -18,6 +18,13 @@ services:
          - "5430:80"
       networks:
          - go-barber-network
+
+   mongo:
+      image: mongo
+      ports:
+         - "27017:27017"
+      networks:
+         - go-barber-network
 networks:
    go-barber-network:
       driver: bridge
