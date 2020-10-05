@@ -3,7 +3,7 @@ import express, { Response, Request, NextFunction } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import net from 'net';
-
+import { errors } from 'celebrate';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import routes from './routes';
@@ -17,6 +17,8 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 app.use('/files', express.static(uploadConfig.directory));
+
+app.use(errors());
 
 app.use((err: Error, _request: Request, response: Response, _next: NextFunction) => {
    if (err instanceof AppError) {
