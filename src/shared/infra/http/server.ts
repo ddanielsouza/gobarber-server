@@ -1,13 +1,14 @@
 import 'reflect-metadata';
-import express, { Response, Request, NextFunction } from 'express';
 import 'express-async-errors';
+import 'dotenv/config';
+
+import express, { Response, Request, NextFunction } from 'express';
 import cors from 'cors';
 import net from 'net';
 import { errors } from 'celebrate';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import routes from './routes';
-
 import '@shared/infra/typeorm';
 import '@shared/container';
 
