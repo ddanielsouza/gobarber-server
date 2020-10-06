@@ -18,5 +18,5 @@ container.registerSingleton<IMailTemplateProvider>(
 
 container.registerInstance<IMailProvider>(
    'MailProvider',
-   mailDrivers[mailConfig.driver],
+   mailDrivers()[mailConfig.driver],
 );
