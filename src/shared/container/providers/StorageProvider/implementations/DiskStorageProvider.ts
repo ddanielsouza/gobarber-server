@@ -5,12 +5,14 @@ import IStorageProvider from '../models/IStorageProvider';
 
 export default class DiskStorageProvider implements IStorageProvider {
    public async saveFile(file: string): Promise<string> {
+      const fileNameFormatted = file.replace(/[^0-9A-Za-z.]/gim, '-');
+
       fs.promises.rename(
          path.resolve(uploadConfig.directory, file),
-         path.resolve(uploadConfig.uploadsFolder, file),
+         path.resolve(uploadConfig.uploadsFolder, fileNameFormatted),
       );
 
-      return file;
+      return fileNameFormatted;
    }
 
    public async deleteFile(file: string): Promise<void> {
