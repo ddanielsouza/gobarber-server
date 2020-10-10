@@ -1,28 +1,28 @@
 import AppError from '@shared/errors/AppError';
+import authConfig from '@config/auth';
 import FakeHasProvider from '../providers/HashProvider/fakes/FakeHasProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import AuthenticateUserService from './AuthenticateUserService';
-import CreateUserServices from './CreateUserServices';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHasProvider: FakeHasProvider;
-let createUsers: CreateUserServices;
 let authenticateUser: AuthenticateUserService;
 
 describe('AuthenticateUser', () => {
    beforeEach(() => {
+      authConfig.jwt.secret = 'secret';
+
       fakeUsersRepository = new FakeUsersRepository();
       fakeHasProvider = new FakeHasProvider();
-
-      createUsers = new CreateUserServices(fakeUsersRepository, fakeHasProvider);
 
       authenticateUser = new AuthenticateUserService(
          fakeUsersRepository,
          fakeHasProvider,
       );
    });
+
    it('should be able to authenticate', async () => {
-      const user = await createUsers.execute({
+      const user = await fakeUsersRepository.create({
          name: 'Jhon doe',
          email: 'jhondoe@gmail.com',
          password: '123456',
@@ -47,7 +47,7 @@ describe('AuthenticateUser', () => {
    });
 
    it('should not be able to authenticate with wrong password', async () => {
-      await createUsers.execute({
+      await fakeUsersRepository.create({
          name: 'Jhon doe',
          email: 'jhondoe@gmail.com',
          password: '123456',
