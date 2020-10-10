@@ -6,6 +6,8 @@ import IMailTemplateProvider from './MailTemplateProvider/models/IMailTemplatePr
 import DiskStorageProvider from './StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './StorageProvider/models/IStorageProvider';
 
+import './CacheProvider';
+
 container.registerSingleton<IStorageProvider>(
    'StorageProvider',
    DiskStorageProvider,
