@@ -13,7 +13,7 @@ appointmentsRouter.use(ensureAuthenticate);
 appointmentsRouter.post(
    '/',
    celebrate({
-      [Segments.BODY]: {
+      [Segments.QUERY]: {
          provider_id: Joi.string().uuid().required(),
          date: Joi.date().required(),
       },
