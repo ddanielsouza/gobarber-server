@@ -15,12 +15,13 @@ import '@shared/container';
 
 const app = express();
 
-app.use(rageLimiter);
 app.use(cors());
 app.use(express.json());
-app.use(routes);
 app.use('/files', express.static(uploadConfig.directory));
 
+app.use(rageLimiter);
+
+app.use(routes);
 app.use(errors());
 
 app.use((err: Error, _request: Request, response: Response, _next: NextFunction) => {
